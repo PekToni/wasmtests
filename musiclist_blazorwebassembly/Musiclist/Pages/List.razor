@@ -1,0 +1,55 @@
+﻿@page "/"
+@using Musiclist.Model;
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+
+
+@if (tracks == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h2>Musiikki</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Artisti</th>
+                <th>Levy</th>
+                <th>Kappale</th>
+                <th>Poista</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var track in tracks)
+            {
+                <tr>
+                    <td>@track.id</td>
+                    <td>@track.artist</td>
+                    <td>@track.album</td>
+                    <td>@track.track</td>
+                    <td><button class="btn btn-secondary" @onclick="(() => RemoveTrack(track._id))">X</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Music> tracks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tracks = await Http.GetFromJsonAsync<List<Music>>("http://localhost:3001/api/music");
+    }
+
+    public async Task RemoveTrack(string _id)
+    {
+        await Http.DeleteAsync($"http://localhost:3001/api/music/{_id}");
+        Music track = tracks.Single(t => t._id == _id);
+        tracks.Remove(track);
+    }
+
+}

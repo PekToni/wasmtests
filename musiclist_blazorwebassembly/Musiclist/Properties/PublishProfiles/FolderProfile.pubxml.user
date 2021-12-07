@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Blazor\blazorapp</_PublishTargetUrl>
+    <History>True|2021-04-16T09:30:03.5192535Z;True|2021-04-16T12:27:12.5889610+03:00;True|2021-04-14T10:49:09.2716077+03:00;True|2021-04-05T15:40:50.5117664+03:00;</History>
+  </PropertyGroup>
+</Project>

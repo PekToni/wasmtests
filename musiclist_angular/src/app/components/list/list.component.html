@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="bg-white">
+        <h2>Musiikki</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Artisti</th>
+                    <th>Levy</th>
+                    <th>Kappale</th>
+                    <th>Poista</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let m of music">
+                <tr>
+                    <td>{{m.id}}</td>
+                    <td>{{m.artist}}</td>
+                    <td>{{m.album}}</td>
+                    <td>{{m.track}}</td>
+                    <td><button class="btn btn-secondary" (click)="removeTrack(m)">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

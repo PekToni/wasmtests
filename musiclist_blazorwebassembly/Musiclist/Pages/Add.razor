@@ -1,0 +1,55 @@
+﻿@page "/add";
+@using Musiclist.Model;
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+
+<EditForm Model="@musicModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <h2>Lisää Kappale</h2>
+    <div class="form-group">
+        <label for="artisti">Artisti</label>
+        <InputText id="artisti" @bind-Value="musicModel.artist" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="albumi">Albumi</label>
+        <InputText id="albumi" @bind-Value="musicModel.album" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="kappale">Kappale</label>
+        <InputText id="kappale" @bind-Value="musicModel.track" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+
+
+@code {
+    private Music musicModel = new Music();
+    private List<Music> tracks;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tracks = await Http.GetFromJsonAsync<List<Music>>("http://localhost:3001/api/music");
+    }
+
+
+    private async Task HandleValidSubmit()
+    {
+        Music lastTrack = tracks.OrderByDescending(t => t.id).First();
+        int newId = lastTrack.id + 1;
+
+        Music track = new Music
+        {
+            id = newId,
+            artist = musicModel.artist,
+            album = musicModel.album,
+            track = musicModel.track
+        };
+
+        await Http.PostAsJsonAsync("http://localhost:3001/api/music", track);
+        NavigationManager.NavigateTo("/");
+    }
+}
